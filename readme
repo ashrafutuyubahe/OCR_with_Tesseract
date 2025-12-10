@@ -1,0 +1,184 @@
+# Printed Text Scanner GUI - OCR Without ML
+
+A PyQt5-based GUI application that uses classical OCR (Tesseract) to extract text from printed images. This project demonstrates AI techniques without machine learning, focusing on image preprocessing and traditional computer vision.
+
+## Features
+
+- **Multiple Input Methods**: Load images from file or capture from live camera
+- **ROI Selection**: Click and drag to select a region of interest on the image
+- **Real-time Preprocessing**: Adjust contrast and threshold values with live feedback
+- **OCR Text Extraction**: Extract text using Tesseract OCR engine
+- **Live Camera Input**: Stream from webcam and perform OCR on camera feed
+- **Text Display & Copy**: View extracted text and copy to clipboard
+- **Preprocessing Pipeline**: Automatic image binarization, inversion, and enhancement
+
+## Requirements
+
+### System Requirements
+- Python 3.7+
+- Windows/Linux/MacOS
+- Tesseract OCR engine installed
+
+### Python Dependencies
+```bash
+PyQt5>=5.15.0
+opencv-python>=4.5.0
+pytesseract>=0.3.10
+numpy>=1.19.0
+```
+
+## Installation
+
+### 1. Install Tesseract OCR Engine
+
+**Windows:**
+- Download installer from: https://github.com/UB-Mannheim/tesseract/wiki
+- Run the installer (default path: `C:\Program Files\Tesseract-OCR`)
+- Note the installation path for later
+
+**Linux (Ubuntu/Debian):**
+```bash
+sudo apt-get install tesseract-ocr
+```
+
+**MacOS:**
+```bash
+brew install tesseract
+```
+
+### 2. Clone Repository and Install Python Dependencies
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/ocr-text-scanner.git
+cd ocr-text-scanner
+
+# Create virtual environment (optional but recommended)
+python -m venv venv
+
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# Linux/MacOS:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 3. Configure Tesseract Path (Windows Only)
+
+Edit `main.py` and update the Tesseract path if needed:
+```python
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+```
+
+## Usage
+
+### Running the Application
+
+```bash
+python main.py
+```
+
+### How to Use
+
+1. **Load Image Method:**
+   - Click "Load Image" button
+   - Select a printed text image from your computer
+   - (Optional) Click and drag on the image to select ROI
+
+2. **Camera Method:**
+   - Click "Start Camera" tab
+   - Click "Start Camera" button
+   - Position camera over printed text
+   - (Optional) Select ROI by clicking and dragging
+
+3. **Adjust Preprocessing:**
+   - Use "Contrast" slider (0-255) for image brightness
+   - Use "Threshold" slider (0-255) for binarization level
+
+4. **Extract Text:**
+   - Click "Run OCR" button
+   - Wait for processing to complete
+   - Extracted text appears in right panel
+
+5. **Copy Results:**
+   - Click "Copy Text" to copy extracted text to clipboard
+
+## Project Structure
+
+```
+ocr-text-scanner/
+├── main.py                 # Main GUI application
+├── requirements.txt        # Python dependencies
+├── README.md              # This file
+└── sample_images/         # Sample images for testing
+    └── example.png
+```
+
+## How It Works
+
+### Image Preprocessing Pipeline
+
+1. **Color Space Conversion**: Convert BGR image to grayscale
+2. **Background Detection**: Determine if background is light or dark
+3. **Inversion**: Invert colors if needed for better contrast
+4. **Contrast Enhancement**: Scale pixel values for better definition
+5. **Binarization**: Convert to black and white using threshold value
+6. **OCR**: Feed processed image to Tesseract
+
+### Key Components
+
+- **OCRPreprocessor**: Handles all image preprocessing and text extraction
+- **ImageLabel**: Custom widget for ROI selection with live visualization
+- **OCRScannerGUI**: Main application window with tabs and controls
+
+## Troubleshooting
+
+### "Tesseract is not installed" Error
+- Ensure Tesseract is installed on your system
+- Verify the path in `main.py` matches your installation location
+- On Windows, default path is `C:\Program Files\Tesseract-OCR\tesseract.exe`
+
+### Camera Not Working
+- Check if your webcam is connected and working
+- Close other applications using the camera
+- Ensure you granted camera permissions
+
+### Poor OCR Results
+- Adjust Contrast slider (increase for better definition)
+- Adjust Threshold slider (try values between 50-150)
+- Ensure image has good lighting
+- Position text parallel to camera
+- Select ROI around the text area
+
+### PyQt5 Import Error
+```bash
+pip install --upgrade PyQt5
+```
+
+## Performance Tips
+
+- Use high-quality images (300+ DPI recommended)
+- Ensure good lighting on printed text
+- Keep text parallel to camera for live input
+- Use ROI selection to focus on text area only
+- Adjust threshold value based on image quality
+
+## Technical Details
+
+**OCR Engine:** Tesseract 5.x
+**GUI Framework:** PyQt5
+**Image Processing:** OpenCV
+**Language:** Python 3.7+
+
+This project focuses on classical AI techniques without machine learning, demonstrating how traditional computer vision approaches can be effective for text recognition tasks.
+
+## License
+
+This project is created for educational purposes.
+
+## Author
+
+Created as part of Week 13 Assignment 2: AI Without ML
